@@ -1,0 +1,19 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+    name: root-prod
+    namespace: argocd
+spec:
+    destination:
+        name: in-cluster
+        namespace: argocd
+    source:
+        path: "my-cluster/prod/applications"
+        repoURL: "http://192.168.1.124/devops/argocd-one-cluster.git"
+        targetRevision: HEAD
+    project: default
+    syncPolicy:
+        automated:
+            prune: true
+            selfHeal: true
+            allowEmpty: true

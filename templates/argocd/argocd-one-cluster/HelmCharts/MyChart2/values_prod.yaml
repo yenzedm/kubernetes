@@ -1,0 +1,6 @@
+# Prod Override Values for my Helm Chart
+
+container:
+  image: yenzedm/flask-test:1.0
+
+replicaCount: 1

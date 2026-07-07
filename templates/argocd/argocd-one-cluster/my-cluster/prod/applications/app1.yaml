@@ -1,0 +1,29 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+    name: app1-prod
+    namespace: argocd
+    finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+    destination:
+        name: in-cluster
+        namespace: app1-prod
+    source:
+        path: "HelmCharts/MyChart1"
+        repoURL: "http://192.168.1.124/devops/argocd-one-cluster.git"
+        targetRevision: HEAD
+        helm:
+            valueFiles:
+                - values_prod.yaml
+            # parameters:
+            #     - name: "container.image"
+            #       value: adv4000/app1:latest
+
+    project: default
+    syncPolicy:
+        automated:
+            prune: true
+            selfHeal: true
+        syncOptions:
+            - CreateNamespace=true
